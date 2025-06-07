@@ -76,7 +76,7 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-    res.cookie("token", "");
+    res.clearCookie("token");
     return res.status(200).json({ message: "Logged out successfully" });
 };
 
@@ -98,5 +98,14 @@ export const deleteProfile = async (req, res) => {
     } catch (error) {
         console.log(`error in deleteProfile controller ${error.message}`);
         return res.status(500).json({ message: "internal server error" });
+    }
+};
+
+export const checkAuth = async (req, res) => {
+    try {
+        return res.status(200).json(req.user);
+    } catch (error) {
+        console.log(`error in checkAuth controller ${error}`);
+        return res.status(500).json({ message: "Internal server error" });
     }
 };

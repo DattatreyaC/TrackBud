@@ -13,9 +13,9 @@ export const getAllTasks = async (req, res) => {
 
 export const createTask = async (req, res) => {
     try {
-        const { title, description, priority, isComplete, dueDate } = req.body;
+        const { title, description, priority, dueDate } = req.body;
 
-        if (!title || !priority || !isComplete) {
+        if (!title || !priority) {
             return res.status(400).json({ message: "Fill all fields" });
         }
 
@@ -23,7 +23,6 @@ export const createTask = async (req, res) => {
             title,
             description,
             priority,
-            isComplete,
             dueDate,
             user: req.user._id,
         });

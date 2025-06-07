@@ -6,6 +6,7 @@ import connectToDb from "./utils/db.js";
 import authRouter from "./routes/auth.routes.js";
 import taskRouter from "./routes/task.routes.js";
 import expenseRouter from "./routes/expense.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/tasks", taskRouter);
 app.use("/api/expenses", expenseRouter);
