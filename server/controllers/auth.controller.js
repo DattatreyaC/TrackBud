@@ -35,7 +35,9 @@ export const register = async (req, res) => {
                     process.env.JWT_SECRET,
                 );
 
-                res.cookie("token", token);
+                res.cookie("token", token, {
+                    httpOnly: true,
+                });
 
                 return res
                     .status(201)
@@ -66,9 +68,11 @@ export const login = async (req, res) => {
         }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            httpOnly: true,
+        });
 
-        return res.status(200).json({ message: "Login successful" });
+        return res.status(200).json(user);
     } catch (error) {
         console.log(`error in login controller ${error.message}`);
         return res.status(500).json({ message: "Internal server error" });
