@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import useAuthStore from "./store/authStore";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./components/dashboard/Dashboard";
 import LoginPage from "./components/auth-components/LoginPage";
 import RegisterPage from "./components/auth-components/RegisterPage";
+import Navbar from "./components/navigation/Navbar";
+import MobileMenu from "./components/navigation/MobileMenu";
 
 const App = () => {
     const { user, checkAuth, isCheckingAuth } = useAuthStore();
+
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         checkAuth();
@@ -19,6 +23,10 @@ const App = () => {
 
     return (
         <>
+            {user && <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />}
+            {user && (
+                <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            )}
             <Routes>
                 {/* <Route
                     path="/"
