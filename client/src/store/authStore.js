@@ -39,7 +39,7 @@ const useAuthStore = create((set) => ({
                 set({ user: response.data });
             }
         } catch (error) {
-            toast.error("Cannot register");
+            toast.error(error.response?.data?.message || "Cannot Register");
         } finally {
             set({ isRegistering: false });
         }
@@ -57,9 +57,40 @@ const useAuthStore = create((set) => ({
             }
         } catch (error) {
             set({ user: null });
-            toast.error(response.data.message);
+            toast.error(error.response?.data?.message || "Login failed");
         } finally {
             set({ isLoggingIn: false });
+        }
+    },
+
+    logout: async () => {
+        try {
+            set({ isLoggingOut: true });
+            const response = await axiosInstance.post("/auth/logout");
+            if (response.status === 200) {
+                toast.success("Logged Out");
+            }
+            set({ user: null });
+        } catch (error) {
+        } finally {
+            set({ isLoggingOut: false });
+        }
+    },
+
+    deleteAccount: async () => {
+        try {
+            set({ isDeletingProfile: true });
+            const response = await axiosInstance.delete("/auth/delete");
+            if (response.status === 200) {
+                set({ user: null });
+                toast.success("Account deleted");
+            }
+        } catch (error) {
+            toast.error(
+                error.response?.data?.message || "Cannot delete account",
+            );
+        } finally {
+            set({ isDeletingProfile: false });
         }
     },
 }));
