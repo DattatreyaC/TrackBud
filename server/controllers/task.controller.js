@@ -3,7 +3,9 @@ import User from "../models/User.js";
 
 export const getAllTasks = async (req, res) => {
     try {
-        const allTasks = await Task.find({ user: req.user._id });
+        const allTasks = await Task.find({ user: req.user._id }).sort({
+            createdAt: -1,
+        });
         return res.status(200).json(allTasks);
     } catch (error) {
         console.log(`error in getAllTasks controller ${error.message}`);
@@ -100,6 +102,21 @@ export const deleteTask = async (req, res) => {
         }
     } catch (error) {
         console.log(`error in deleteTask controller ${error.message}`);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const getDashboardTasks = async (req, res) => {
+    try {
+        const tasks = await Task.find({ user: req.user._id })
+            .sort({
+                createdAt: -1,
+            })
+            .limit(3);
+
+        return res.status(200).json(tasks);
+    } catch (error) {
+        console.log(`Error in getLatestTasks: ${error.message}`);
         return res.status(500).json({ message: "Internal server error" });
     }
 };

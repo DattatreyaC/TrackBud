@@ -22,7 +22,7 @@ const MobileMenu = ({ menuOpen, setMenuOpen }) => {
 
             <Link
                 to={"/dashboard"}
-                className={`text-2xl font-semibold text-white my-4 transform transition-transform duration-300  p-2
+                className={`text-2xl font-semibold text-white text-shadow-[2.5px_2.5px_2.5px_black] my-4 transform transition-transform duration-300  p-2
                     ${
                         menuOpen
                             ? "opacity-100 translate-y-0"
@@ -37,7 +37,7 @@ const MobileMenu = ({ menuOpen, setMenuOpen }) => {
             <Link
                 to={"/tasks"}
                 onClick={() => setMenuOpen(false)}
-                className={`text-2xl font-semibold text-white my-4 transform transition-transform duration-300  p-2
+                className={`text-2xl font-semibold text-white text-shadow-[2.5px_2.5px_2.5px_black] my-4 transform transition-transform duration-300  p-2
                     ${
                         menuOpen
                             ? "opacity-100 translate-y-0"
@@ -50,7 +50,7 @@ const MobileMenu = ({ menuOpen, setMenuOpen }) => {
 
             <Link
                 to={"/expenses"}
-                className={`text-2xl font-semibold text-white my-4 transform transition-transform duration-300  p-2
+                className={`text-2xl font-semibold text-white text-shadow-[2.5px_2.5px_2.5px_black] my-4 transform transition-transform duration-300  p-2
                     ${
                         menuOpen
                             ? "opacity-100 translate-y-0"

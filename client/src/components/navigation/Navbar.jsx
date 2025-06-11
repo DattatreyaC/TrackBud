@@ -8,7 +8,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
     const [isDelete, setIsDelete] = useState(false);
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-40 bg-[200,200,200,1] py-3 [backdrop-filter:blur(10px)] border-b border-b-white/25 shadow-2xl ">
+        <nav className="fixed top-0 left-0 w-full z-40 bg-black py-3 shadow-2xl ">
             <div className="w-full h-max px-6 sm:px-10 md:px-15 lg:px-40 xl:px-60 2xl:px-80 flex items-center justify-between ">
                 {/* <a
                     id="logo"
@@ -88,7 +88,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
             </div>
 
             <div
-                className={`w-full h-screen p-1 bg-black/50 absolute top-0 left-0 place-content-center  ${
+                className={`w-full h-screen p-1 bg-black/50 absolute top-0 left-0 flex items-center justify-center  ${
                     open ? "block" : "hidden"
                 }`}
             >

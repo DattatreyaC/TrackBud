@@ -7,6 +7,7 @@ import LoginPage from "./components/auth-components/LoginPage";
 import RegisterPage from "./components/auth-components/RegisterPage";
 import Navbar from "./components/navigation/Navbar";
 import MobileMenu from "./components/navigation/MobileMenu";
+import Tasks from "./components/task-components/Tasks";
 
 const App = () => {
     const { user, checkAuth, isCheckingAuth } = useAuthStore();
@@ -18,7 +19,11 @@ const App = () => {
     }, []);
 
     if (isCheckingAuth && !user) {
-        return <div className="w-full h-screen">Loading</div>;
+        return (
+            <div className="w-full h-screen flex items-center justify-center">
+                Loading
+            </div>
+        );
     }
 
     return (
@@ -28,16 +33,13 @@ const App = () => {
                 <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             )}
             <Routes>
-                {/* <Route
-                    path="/"
-                    element={user ? <Dashboard /> : <LoginPage />}
-                ></Route> */}
                 <Route
-                    path="/login"
+                    path="/"
                     element={
                         !user ? <LoginPage /> : <Navigate to={"/dashboard"} />
                     }
                 ></Route>
+
                 <Route
                     path="/register"
                     element={
@@ -48,12 +50,23 @@ const App = () => {
                         )
                     }
                 ></Route>
+
                 <Route
                     path="/dashboard"
-                    element={user ? <Dashboard /> : <Navigate to={"/login"} />}
+                    element={user ? <Dashboard /> : <Navigate to={"/"} />}
                 ></Route>
-                <Route path="/tasks"></Route>
+
+                <Route
+                    path="/tasks"
+                    element={user ? <Tasks /> : <Navigate to={"/"} />}
+                ></Route>
+
                 <Route path="/expenses"></Route>
+
+                <Route
+                    path="*"
+                    element={<Navigate to={user ? "/dashboard" : "/"} />}
+                ></Route>
             </Routes>
             <Toaster />
         </>

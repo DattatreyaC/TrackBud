@@ -12,7 +12,9 @@ export const getUserData = async (req, res) => {
 
 export const getUserTasks = async (req, res) => {
     try {
-        const tasks = await Task.find({ user: req.user._id });
+        const tasks = await Task.find({ user: req.user._id }).sort({
+            createdAt: -1,
+        });
         if (tasks) {
             return res.status(200).json(tasks);
         }
