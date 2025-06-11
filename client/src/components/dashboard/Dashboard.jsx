@@ -11,13 +11,6 @@ const Dashboard = () => {
     const { transactions, isFetchingTransactions, getDashboardTransactions } =
         useTransactionStore();
 
-    // const { displayTasks, setDisplayTasks } = useState([]);
-    const { date, setDate } = useState(null);
-
-    // if (tasks.length > 2) {
-    //     displayTasks;
-    // }
-
     const formatDate = (date) => {
         let finalDate = "";
         const formattedDate = date.substring(0, date.indexOf("T"));
@@ -73,10 +66,10 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="relative w-full h-screen p-5 flex flex-col pt-20 bg-gray-100">
+            <div className="relative w-full min-h-screen h-screen p-5 flex flex-col pt-20 bg-gray-100">
                 <div className="w-full text-center">
                     <h1 className="text-3xl text-black font-bold ">
-                        {"Welcome, " + user.firstname.toUpperCase()}
+                        {"Welcome, " + user.firstname}
                     </h1>
                 </div>
 
@@ -97,14 +90,14 @@ const Dashboard = () => {
                             </div>
                         ) : (
                             <div className=" w-full h-full text-center flex flex-col items-center justify-between bg-gray-300">
-                                <div className="h-full w-full flex flex-col items-start justify-begin">
+                                <div className="h-full w-full flex flex-col items-start justify-begin ">
                                     {tasks.map((task, index) => {
                                         return (
                                             <div
                                                 key={index}
-                                                className="h-1/3 w-full border-b flex items-center justify-around bg-gray-300"
+                                                className="h-1/3 px-8 w-full border-b flex items-center justify-between bg-gray-300"
                                             >
-                                                <div className="flex flex-col justify-start">
+                                                <div className="flex flex-col justify-start w-full">
                                                     <h2 className="text-xl text-start">
                                                         {task.title}
                                                     </h2>
@@ -115,37 +108,38 @@ const Dashboard = () => {
                                                     </p>
                                                 </div>
 
-                                                <h4
-                                                    className={`font-semibold ${
-                                                        task.priority ===
-                                                            "Low" &&
-                                                        "text-green-700 bg-green-400/10 border border-green-700"
-                                                    } ${
-                                                        task.priority ===
-                                                            "Medium" &&
-                                                        "text-orange-400 bg-orange-300/10 border border-orange-400"
-                                                    } ${
-                                                        task.priority ===
-                                                            "High" &&
-                                                        "text-red-700 bg-red-500/10 border border-red-500"
-                                                    } px-4 rounded-full text-sm`}
-                                                >
-                                                    {task.priority}
-                                                </h4>
+                                                <div className="w-full flex items-center justify-end">
+                                                    <h4
+                                                        className={`font-semibold ${
+                                                            task.priority ===
+                                                                "Low" &&
+                                                            "text-green-700 bg-green-400/10 border border-green-700"
+                                                        } ${
+                                                            task.priority ===
+                                                                "Medium" &&
+                                                            "text-orange-500 bg-orange-300/10 border border-orange-400"
+                                                        } ${
+                                                            task.priority ===
+                                                                "High" &&
+                                                            "text-red-700 bg-red-500/10 border border-red-500"
+                                                        } px-4 rounded-full text-sm`}
+                                                    >
+                                                        {task.priority}
+                                                    </h4>
+                                                </div>
                                             </div>
                                         );
                                     })}
                                 </div>
                             </div>
                         )}
-                        <div className="h-max w-full border-t bg-gray-400 text-center">
-                            <Link
-                                to={"/tasks"}
-                                className="p-1 text-black font-semibold cursor-pointer"
-                            >
-                                Manage your tasks
-                            </Link>
-                        </div>
+
+                        <Link
+                            to={"/tasks"}
+                            className="p-1 text-white bg-gray-800 font-semibold cursor-pointer h-max w-full border-t border-t-white text-center"
+                        >
+                            Manage your tasks
+                        </Link>
                     </div>
                 </div>
 

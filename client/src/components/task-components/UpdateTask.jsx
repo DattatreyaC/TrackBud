@@ -1,44 +1,41 @@
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 import useTaskStore from "../../store/TaskStore";
 
-const CreateTask = ({ createOpen, setCreateOpen }) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [priority, setPriority] = useState("");
-    const [dueDate, setDueDate] = useState("");
+const UpdateTask = ({ updateOpen, setUpdateOpen }) => {
+    const { updateTask, isUpdatingTask, taskToBeUpdated } = useTaskStore();
 
-    const { createTask, isCreatingTask } = useTaskStore();
+    if (taskToBeUpdated.description === null) {
+        taskToBeUpdated.description = "";
+    }
 
-    const validateForm = () => {
-        if (title === "" || priority === "" || dueDate === "") {
-            return false;
-        }
-
-        return true;
-    };
+    const [title, setTitle] = useState(taskToBeUpdated.title);
+    const [description, setDescription] = useState(taskToBeUpdated.description);
+    const [priority, setPriority] = useState(taskToBeUpdated.priority);
+    const [dueDate, setDueDate] = useState(
+        taskToBeUpdated.dueDate.substring(
+            0,
+            taskToBeUpdated.dueDate.indexOf("T"),
+        ),
+    );
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (validateForm() === true) {
-            createTask(title, description, priority, dueDate);
-            console.log(dueDate);
-            while (isCreatingTask) {}
+        const payload = {
+            title,
+            description,
+            priority,
+            dueDate,
+        };
 
-            setTitle("");
-            setDescription("");
-            setPriority("");
-            setDueDate("");
-        } else {
-            toast.error("Fill required fields");
-        }
+        updateTask(taskToBeUpdated._id, payload);
+        setUpdateOpen(false);
     };
 
     return (
         <div className="h-full w-full absolute top-0 left-0 bg-black/90 z-20 px-5 flex flex-col items-center justify-center ">
             <h1 className="text-4xl w-full text-center py-5 bg-white/80 border-b border-dashed rounded-t-sm">
-                Add new Task
+                Edit Task
             </h1>
             <form
                 onSubmit={(e) => handleSubmit(e)}
@@ -91,9 +88,7 @@ const CreateTask = ({ createOpen, setCreateOpen }) => {
                             type="date"
                             placeholder="Due date"
                             value={dueDate}
-                            onChange={(e) => {
-                                setDueDate(e.target.value);
-                            }}
+                            onChange={(e) => setDueDate(e.target.value)}
                             className="border p-1"
                         />
                     </div>
@@ -102,18 +97,18 @@ const CreateTask = ({ createOpen, setCreateOpen }) => {
                 <div className="flex gap-5 w-full">
                     <button
                         type="submit"
-                        disabled={isCreatingTask}
+                        disabled={isUpdatingTask}
                         className="p-2 w-full bg-green-800 mt-3 rounded-sm cursor-pointer text-white hover:bg-green-900 transition-colors duration-100"
                     >
-                        Add Task
+                        Save
                     </button>
 
                     <button
-                        onClick={() => setCreateOpen(false)}
-                        disabled={isCreatingTask}
+                        onClick={() => setUpdateOpen(false)}
+                        disabled={isUpdatingTask}
                         className="p-2 w-full bg-red-800 mt-3 rounded-sm cursor-pointer text-white hover:bg-red-900 transition-colors duration-100"
                     >
-                        Close
+                        Cancel
                     </button>
                 </div>
             </form>
@@ -121,4 +116,4 @@ const CreateTask = ({ createOpen, setCreateOpen }) => {
     );
 };
 
-export default CreateTask;
+export default UpdateTask;

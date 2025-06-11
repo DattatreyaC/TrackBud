@@ -37,6 +37,7 @@ const useAuthStore = create((set) => ({
             });
             if (response.status === 201) {
                 set({ user: response.data });
+                toast.success("Account Created");
             }
         } catch (error) {
             toast.error(error.response?.data?.message || "Cannot Register");

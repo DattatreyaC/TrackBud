@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 
 const useTaskStore = create((set, get) => ({
     tasks: [],
+    taskToBeUpdated: null,
     // dashboardTasks: [],
     isFetchingTasks: false,
     isCreatingTask: false,
@@ -40,7 +41,23 @@ const useTaskStore = create((set, get) => ({
         }
     },
 
-    updateTask: async () => {},
+    updateTask: async (id, payload) => {
+        try {
+            set({ isUpdatingTask: true });
+            const response = await axiosInstance.put(
+                `/tasks/update/${id}`,
+                payload,
+            );
+            if (response.status === 200) {
+                toast.success("Task Updated");
+            }
+        } catch (error) {
+            console.log(`error in updateTask ${error.message}`);
+            toast.error(error.response?.data?.message || "Cannot update task");
+        } finally {
+            set({ isUpdatingTask: false });
+        }
+    },
 
     deleteTask: async (id) => {
         try {
@@ -93,6 +110,14 @@ const useTaskStore = create((set, get) => ({
             );
         } finally {
             set({ isFetchingTasks: false });
+        }
+    },
+
+    setTaskToBeUpdated: (task) => {
+        try {
+            set({ taskToBeUpdated: task });
+        } catch (error) {
+            console.log(`error in setTaskToBeUpdated ${error.message}`);
         }
     },
 }));
