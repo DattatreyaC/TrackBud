@@ -42,7 +42,19 @@ const useTaskStore = create((set, get) => ({
 
     updateTask: async () => {},
 
-    deleteTask: async () => {},
+    deleteTask: async (id) => {
+        try {
+            set({ isDeletingTask: true });
+            const response = await axiosInstance.delete(`/tasks/delete/${id}`);
+            if (response.status === 200) {
+                toast.success("Task Deleted");
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message);
+        } finally {
+            set({ isDeletingTask: false });
+        }
+    },
 
     getAllTasks: async () => {
         // if (get().tasks.length > 0) {

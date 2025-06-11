@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useTaskStore from "../../store/TaskStore";
 
 const TaskCard = ({
     id,
@@ -7,14 +8,10 @@ const TaskCard = ({
     priority,
     isComplete,
     dueDate,
+    complete,
+    handleDelete,
+    handleComplete,
 }) => {
-    const [complete, setComplete] = useState(false);
-
-    const handleComplete = (id) => {
-        setComplete((prev) => !prev);
-        console.log(title + complete);
-    };
-
     return (
         <>
             <input
@@ -47,7 +44,10 @@ const TaskCard = ({
                 {priority}
             </h4>
 
-            <button className="border border-red-500 p-1 text-red-500 bg-red-300/30 rounded-lg cursor-pointer">
+            <button
+                className="border border-red-500 p-1 text-red-500 bg-red-300/30 rounded-lg cursor-pointer"
+                onClick={() => handleDelete(id)}
+            >
                 Del
             </button>
 

@@ -5,12 +5,26 @@ import TaskCard from "./TaskCard";
 import CreateTask from "./CreateTask";
 
 const Tasks = () => {
+    const { updateTask, isUpdatingTask, deleteTask, isDeletingTask } =
+        useTaskStore();
+
     const { tasks, isFetchingTasks, getAllTasks } = useTaskStore();
     const [createOpen, setCreateOpen] = useState(false);
+    const [complete, setComplete] = useState(false);
+
+    const handleComplete = (id) => {
+        setComplete((prev) => !prev);
+        console.log(id);
+    };
+
+    const handleDelete = (id) => {
+        deleteTask(id);
+    };
 
     useEffect(() => {
         getAllTasks();
-    }, [createOpen]);
+        console.log(`rendering`);
+    }, [createOpen, isDeletingTask]);
 
     if (isFetchingTasks && !tasks) {
         return (
@@ -48,6 +62,9 @@ const Tasks = () => {
                                     priority={task.priority}
                                     isComplete={task.isComplete}
                                     dueDate={task.dueDate}
+                                    complete={complete}
+                                    handleComplete={handleComplete}
+                                    handleDelete={handleDelete}
                                 />
                             </div>
                         );
