@@ -11,7 +11,7 @@ const CreateTask = ({ createOpen, setCreateOpen }) => {
     const { createTask, isCreatingTask } = useTaskStore();
 
     const validateForm = () => {
-        if (title === "" || priority === "" || dueDate === "") {
+        if (title === "" || priority === "") {
             return false;
         }
 
@@ -23,13 +23,13 @@ const CreateTask = ({ createOpen, setCreateOpen }) => {
 
         if (validateForm() === true) {
             createTask(title, description, priority, dueDate);
-            console.log(dueDate);
             while (isCreatingTask) {}
 
             setTitle("");
             setDescription("");
             setPriority("");
             setDueDate("");
+            setCreateOpen(false);
         } else {
             toast.error("Fill required fields");
         }

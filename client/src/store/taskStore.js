@@ -4,8 +4,9 @@ import toast from "react-hot-toast";
 
 const useTaskStore = create((set, get) => ({
     tasks: [],
+    dashboardTasks: [],
+
     taskToBeUpdated: null,
-    // dashboardTasks: [],
     isFetchingTasks: false,
     isCreatingTask: false,
     isUpdatingTask: false,
@@ -101,10 +102,10 @@ const useTaskStore = create((set, get) => ({
             set({ isFetchingTasks: true });
             const response = await axiosInstance.get("/tasks/dashboard-tasks");
             if (response.status === 200) {
-                set({ tasks: response.data });
+                set({ dashboardTasks: response.data });
             }
         } catch (error) {
-            set({ tasks: null });
+            set({ dashboardTasks: null });
             toast.error(
                 error.response?.data?.message || "Something went wrong",
             );

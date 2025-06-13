@@ -39,9 +39,7 @@ export const register = async (req, res) => {
                     httpOnly: true,
                 });
 
-                return res
-                    .status(201)
-                    .json({ message: "User created", createdUser });
+                return res.status(201).json(createdUser);
             }
         } else {
             return res.status(500).json({ message: "Something went wrong" });

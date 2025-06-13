@@ -7,16 +7,28 @@ const UpdateTask = ({ updateOpen, setUpdateOpen }) => {
     if (taskToBeUpdated.description === null) {
         taskToBeUpdated.description = "";
     }
+    if (taskToBeUpdated.dueDate === null) {
+        taskToBeUpdated.dueDate = "";
+    } else {
+        taskToBeUpdated.dueDate = taskToBeUpdated.dueDate.substring(
+            0,
+            taskToBeUpdated.dueDate.indexOf("T"),
+        );
+    }
 
     const [title, setTitle] = useState(taskToBeUpdated.title);
     const [description, setDescription] = useState(taskToBeUpdated.description);
     const [priority, setPriority] = useState(taskToBeUpdated.priority);
-    const [dueDate, setDueDate] = useState(
-        taskToBeUpdated.dueDate.substring(
-            0,
-            taskToBeUpdated.dueDate.indexOf("T"),
-        ),
-    );
+    const [dueDate, setDueDate] = useState(taskToBeUpdated.dueDate);
+
+    // if (taskToBeUpdated.dueDate != null) {
+    //     setDueDate(
+    //         taskToBeUpdated.dueDate.substring(
+    //             0,
+    //             taskToBeUpdated.dueDate.indexOf("T"),
+    //         ),
+    //     );
+    // }
 
     const handleSubmit = (e) => {
         e.preventDefault();

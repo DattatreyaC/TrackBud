@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../misc/Modal";
+import useNavStore from "../../store/navStore";
 
 const Navbar = ({ menuOpen, setMenuOpen }) => {
-    const [open, setOpen] = useState(false);
-    const [isLogout, setIsLogout] = useState(false);
-    const [isDelete, setIsDelete] = useState(false);
+    const { activeLink, setActiveLink } = useNavStore();
+
+    // const [activeLink, setActiveLink] = useState(2);
+
+    const handleNavLinkClick = (id) => {
+        setActiveLink(id);
+    };
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-40 bg-black py-3 shadow-2xl ">
-            <div className="w-full h-max px-6 sm:px-10 md:px-15 lg:px-40 xl:px-60 2xl:px-80 flex items-center justify-between ">
+        <nav className="absolute bottom-0 left-0 w-full z-40 bg-black py-3 shadow-[0_-3px_10px_black] ">
+            {/* h-max px-6 sm:px-10 md:px-15 lg:px-40 xl:px-60 2xl:px-80 flex items-center justify-betwee */}
+            <div className="w-full ">
                 {/* <a
                     id="logo"
                     href="#home"
@@ -27,7 +33,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
                     </div>
                 </a> */}
 
-                {/* mobile menu */}
+                {/* mobile menu
                 <button
                     className={`w-7 h-5 relative z-40 flex items-center justify-center p-5 text-xl md:hidden ${
                         menuOpen ? "opacity-0" : "opacity-100"
@@ -36,70 +42,77 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
                     aria-label="Open Menu"
                 >
                     <i className="ri-menu-fill z-50"></i>
-                </button>
+                </button> */}
 
                 {/* desktop menu */}
                 <div
                     id="links"
-                    className="hidden md:flex items-center gap-8 border rounded-xl duration-300 transition-colors"
+                    className="w-full flex items-center justify-evenly gap-8 rounded-xl duration-300 transition-colors"
                 >
                     <Link
-                        to={"/dashboard"}
-                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
-                    >
-                        Home
-                    </Link>
-
-                    <Link
-                        to={"/tasks"}
-                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
-                    >
-                        Tasks
-                    </Link>
-
-                    <Link
+                        id="transactions"
                         to={"/expenses"}
-                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
+                        onClick={() => handleNavLinkClick(1)}
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2 size-10 flex items-center justify-center rounded-full text-xl flex-col"
                     >
-                        Expenses
+                        {activeLink === 1 ? (
+                            <i className="ri-wallet-3-fill"></i>
+                        ) : (
+                            <i className="ri-wallet-3-line"></i>
+                        )}
+
+                        <p
+                            className={`${
+                                activeLink === 1 ? "text-[1rem]" : "text-sm"
+                            } `}
+                        >
+                            Transactions
+                        </p>
+                    </Link>
+
+                    <Link
+                        id="home"
+                        to={"/dashboard"}
+                        onClick={() => handleNavLinkClick(2)}
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2 size-10 flex items-center justify-center rounded-full text-xl flex-col"
+                    >
+                        {/* {console.log(activeLink)} */}
+                        {activeLink === 2 ? (
+                            <i className="ri-home-9-fill"></i>
+                        ) : (
+                            <i className="ri-home-2-line"></i>
+                        )}
+
+                        <p
+                            className={`${
+                                activeLink === 2 ? "text-[1rem]" : "text-sm"
+                            } `}
+                        >
+                            Home
+                        </p>
+                    </Link>
+
+                    <Link
+                        id="tasks"
+                        to={"/tasks"}
+                        onClick={() => handleNavLinkClick(3)}
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2 size-10 flex items-center justify-center rounded-full text-xl flex-col"
+                    >
+                        {activeLink === 3 ? (
+                            <i className="ri-todo-fill"></i>
+                        ) : (
+                            <i className="ri-todo-line"></i>
+                        )}
+
+                        <p
+                            className={`${
+                                activeLink === 3 ? "text-[1rem]" : "text-sm"
+                            } `}
+                        >
+                            Tasks
+                        </p>
                     </Link>
                 </div>
-
-                <div className="w-full flex items-center justify-end">
-                    <button
-                        onClick={() => {
-                            setOpen(true);
-                            setIsLogout(true);
-                        }}
-                        className="border py-1 px-3 text-sm bg-amber-600 text-white font-semibold rounded-sm"
-                    >
-                        Logout
-                    </button>
-                    <button
-                        onClick={() => {
-                            setOpen(true);
-                            setIsDelete(true);
-                        }}
-                        className="border ml-3 py-1 px-3 text-sm bg-red-800 text-white font-semibold rounded-sm"
-                    >
-                        Delete Account
-                    </button>
-                </div>
-            </div>
-
-            <div
-                className={`w-full h-screen p-1 bg-black/50 absolute top-0 left-0 flex items-center justify-center  ${
-                    open ? "block" : "hidden"
-                }`}
-            >
-                <Modal
-                    open={open}
-                    setOpen={setOpen}
-                    isLogout={isLogout}
-                    isDelete={isDelete}
-                    setIsLogout={setIsLogout}
-                    setIsDelete={setIsDelete}
-                />
             </div>
         </nav>
     );

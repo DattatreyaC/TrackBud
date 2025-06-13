@@ -6,8 +6,8 @@ import Dashboard from "./components/dashboard/Dashboard";
 import LoginPage from "./components/auth-components/LoginPage";
 import RegisterPage from "./components/auth-components/RegisterPage";
 import Navbar from "./components/navigation/Navbar";
-import MobileMenu from "./components/navigation/MobileMenu";
 import Tasks from "./components/task-components/Tasks";
+import Header from "./components/Header/Header";
 
 const App = () => {
     const { user, checkAuth, isCheckingAuth } = useAuthStore();
@@ -27,49 +27,50 @@ const App = () => {
     }
 
     return (
-        <>
-            {user && <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />}
-            {user && (
-                <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-            )}
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        !user ? <LoginPage /> : <Navigate to={"/dashboard"} />
-                    }
-                ></Route>
-
-                <Route
-                    path="/register"
-                    element={
-                        !user ? (
-                            <RegisterPage />
-                        ) : (
-                            <Navigate to={"/dashboard"} />
-                        )
-                    }
-                ></Route>
-
-                <Route
-                    path="/dashboard"
-                    element={user ? <Dashboard /> : <Navigate to={"/"} />}
-                ></Route>
-
-                <Route
-                    path="/tasks"
-                    element={user ? <Tasks /> : <Navigate to={"/"} />}
-                ></Route>
-
-                <Route path="/expenses"></Route>
-
-                <Route
-                    path="*"
-                    element={<Navigate to={user ? "/dashboard" : "/"} />}
-                ></Route>
-            </Routes>
-            <Toaster />
-        </>
+        <div className="w-full min-h-screen flex justify-center">
+            <div className="w-full max-w-[768px] min-h-screen relative border-r-2 border-l-2">
+                {user && (
+                    <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                )}
+                {user && <Header />}
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            !user ? (
+                                <LoginPage />
+                            ) : (
+                                <Navigate to={"/dashboard"} />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/register"
+                        element={
+                            !user ? (
+                                <RegisterPage />
+                            ) : (
+                                <Navigate to={"/dashboard"} />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/dashboard"
+                        element={user ? <Dashboard /> : <Navigate to={"/"} />}
+                    />
+                    <Route
+                        path="/tasks"
+                        element={user ? <Tasks /> : <Navigate to={"/"} />}
+                    />
+                    <Route path="/expenses" />
+                    <Route
+                        path="*"
+                        element={<Navigate to={user ? "/dashboard" : "/"} />}
+                    />
+                </Routes>
+                <Toaster position="bottom-center" />
+            </div>
+        </div>
     );
 };
 

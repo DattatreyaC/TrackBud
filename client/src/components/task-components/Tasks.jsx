@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import TaskCard from "./TaskCard";
 import CreateTask from "./CreateTask";
 import UpdateTask from "./UpdateTask";
+import TaskSummary from "./TaskSummary";
 
 const Tasks = () => {
     const {
         tasks,
+        isCreatingTask,
         isFetchingTasks,
         getAllTasks,
         updateTask,
@@ -15,15 +17,16 @@ const Tasks = () => {
         deleteTask,
         isDeletingTask,
         setTaskToBeUpdated,
+        taskToBeUpdated,
     } = useTaskStore();
 
     const [createOpen, setCreateOpen] = useState(false);
     const [updateOpen, setUpdateOpen] = useState(false);
-    const [complete, setComplete] = useState(false);
+    const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
 
-    const handleComplete = (id) => {
-        setComplete((prev) => !prev);
-        console.log(id);
+    const handleComplete = (id, isComplete) => {
+        const payload = { isComplete: !isComplete };
+        updateTask(id, payload);
     };
 
     const handleDelete = (id) => {
@@ -31,10 +34,15 @@ const Tasks = () => {
     };
 
     useEffect(() => {
-        getAllTasks();
-    }, [createOpen, isDeletingTask, isUpdatingTask]);
+        const fetchTasks = async () => {
+            await getAllTasks();
+            if (!hasLoadedOnce) setHasLoadedOnce(true);
+        };
 
-    if (isFetchingTasks && !tasks) {
+        fetchTasks();
+    }, [isCreatingTask, isDeletingTask, isUpdatingTask]);
+
+    if (isFetchingTasks && !hasLoadedOnce) {
         return (
             <div className="min-h-screen w-full flex place-content-center">
                 LOADING...
@@ -44,7 +52,7 @@ const Tasks = () => {
 
     return (
         <>
-            <div className="min-h-screen h-screen w-full pt-15 relative">
+            <div className="min-h-screen h-screen w-full pb-15 pt-18 overflow-y-auto">
                 {createOpen && (
                     <CreateTask
                         createOpen={createOpen}
@@ -59,6 +67,7 @@ const Tasks = () => {
                 )}
 
                 <div className=" w-full h-full">
+                    <TaskSummary tasks={tasks} />
                     {tasks.length === 0 ? (
                         <div className=" h-full w-full text-center flex flex-col items-center justify-center">
                             <h1 className="text-3xl font-semibold">
@@ -71,12 +80,27 @@ const Tasks = () => {
                             return (
                                 <div
                                     key={task._id}
-                                    className={` w-full p-3 flex items-center justify-between relative ${
+                                    className={` w-full p-3 flex items-center justify-between relative  ${
                                         index % 2 === 0
-                                            ? "bg-gray-100"
+                                            ? "bg-gray-200"
                                             : "bg-gray-300"
                                     }`}
                                 >
+                                    <div className=" flex items-center justify-center h-full">
+                                        <input
+                                            type="checkbox"
+                                            checked={task.isComplete}
+                                            className="size-5 accent-green-600 "
+                                            onChange={() => {
+                                                setTaskToBeUpdated(task);
+                                                handleComplete(
+                                                    task._id,
+                                                    task.isComplete,
+                                                );
+                                            }}
+                                        />
+                                    </div>
+
                                     <TaskCard
                                         id={task._id}
                                         title={task.title}
@@ -84,13 +108,12 @@ const Tasks = () => {
                                         priority={task.priority}
                                         isComplete={task.isComplete}
                                         dueDate={task.dueDate}
-                                        complete={complete}
                                     />
 
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-3">
                                         {/* edit button */}
                                         <button
-                                            className="border border-blue-500 p-1 text-blue-500 bg-blue-300/30 cursor-pointer size-8 rounded-full flex items-center justify-center"
+                                            className="border border-blue-500 p-1 text-blue-500 bg-blue-300/30 cursor-pointer size-9 sm:size-10 rounded-full flex items-center justify-center"
                                             onClick={() => {
                                                 setUpdateOpen(true);
                                                 setTaskToBeUpdated(task);
@@ -101,7 +124,8 @@ const Tasks = () => {
 
                                         {/* delete button */}
                                         <button
-                                            className="border border-red-500 p-1 text-red-500 bg-red-300/30 cursor-pointer size-8 rounded-full flex items-center justify-center"
+                                            className="border border-red-500 p-1 text-red-500 bg-red-300/30 cursor-pointer size-9
+                                            sm:size-10 rounded-full flex items-center justify-center"
                                             onClick={() =>
                                                 handleDelete(task._id)
                                             }
@@ -115,7 +139,7 @@ const Tasks = () => {
                         })
                     )}
 
-                    <div className="w-full flex items-center justify-center fixed bottom-0 my-10">
+                    <div className="w-full flex items-center justify-center absolute bottom-0 mb-20">
                         <button
                             className="p-3  bg-green-900 hover:bg-green-800 transition-colors duration-100 text-white rounded-full text-center cursor-pointer size-15 flex items-center justify-center shadow-[2px_2px_3px_black]"
                             onClick={() => setCreateOpen(true)}

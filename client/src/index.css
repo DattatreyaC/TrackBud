@@ -2,4 +2,26 @@
 
 body {
     font-family: Bahnschrift;
+    /* background-color: rgb(206, 206, 206);
+    display: flex;
+    align-items: center;
+    justify-content: center; */
 }
+
+/* #dashboard {
+    background-image: url("https://plus.unsplash.com/premium_photo-1706800283416-386564888732?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position: center;
+} */
+
+#overall {
+    letter-spacing: 2px;
+}
+
+/* ::-webkit-scrollbar {
+    background-color: black;
+    width: 0.5rem;
+}
+::-webkit-scrollbar-thumb {
+    background-color: white;
+} */

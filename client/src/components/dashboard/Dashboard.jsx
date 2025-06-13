@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import useAuthStore from "../../store/authStore";
-import Modal from "../misc/Modal";
 import useTaskStore from "../../store/TaskStore";
 import useTransactionStore from "../../store/transactionStore";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
     const { user, logout, deleteAccount, isDeletingProfile } = useAuthStore();
-    const { tasks, isFetchingTasks, getDashboardTasks } = useTaskStore();
+    const { dashboardTasks, isFetchingTasks, getDashboardTasks } =
+        useTaskStore();
     const { transactions, isFetchingTransactions, getDashboardTransactions } =
         useTransactionStore();
 
@@ -66,7 +66,10 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="relative w-full min-h-screen h-screen p-5 flex flex-col pt-20 bg-gray-100">
+            <div
+                id="dashboard"
+                className="relative w-full min-h-screen h-screen p-5 flex flex-col pb-20 pt-20 bg-gray-100 "
+            >
                 <div className="w-full text-center">
                     <h1 className="text-3xl text-black font-bold ">
                         {"Welcome, " + user.firstname}
@@ -75,14 +78,14 @@ const Dashboard = () => {
 
                 <div className=" w-full h-full p-3">
                     <div className="border border-r-6 border-b-7 rounded-md w-full h-full flex flex-col items-center justify-between overflow-hidden">
-                        <h1 className="text-[1.6rem] p-2.5 h-max border-b-3 border-b-black w-full bg-gray-500 text-white font-semibold text-center text-shadow-[2.5px_2.5px_3px_black]">
-                            Recent tasks
+                        <h1 className="text-[1.6rem] p-2.5 h-max border-b-3 border-b-black w-full px-5 bg-gray-500 text-white font-semibold text-center text-shadow-[2.5px_2.5px_3px_black]">
+                            Your Latest Tasks
                         </h1>
 
-                        {tasks.length === 0 ? (
+                        {dashboardTasks.length === 0 ? (
                             <div className="text-center">
                                 <p className="text-xl font-semibold text-black">
-                                    Your most recent tasks appear here.
+                                    Your most recent tasks appear here
                                 </p>
                                 <p className="text-sm text-black">
                                     Start adding tasks to see them here
@@ -91,7 +94,7 @@ const Dashboard = () => {
                         ) : (
                             <div className=" w-full h-full text-center flex flex-col items-center justify-between bg-gray-300">
                                 <div className="h-full w-full flex flex-col items-start justify-begin ">
-                                    {tasks.map((task, index) => {
+                                    {dashboardTasks.map((task, index) => {
                                         return (
                                             <div
                                                 key={index}
@@ -108,7 +111,7 @@ const Dashboard = () => {
                                                     </p>
                                                 </div>
 
-                                                <div className="w-full flex items-center justify-end">
+                                                <div className="w-1/2 flex items-center justify-center">
                                                     <h4
                                                         className={`font-semibold ${
                                                             task.priority ===
@@ -135,10 +138,11 @@ const Dashboard = () => {
                         )}
 
                         <Link
-                            to={"/tasks"}
-                            className="p-1 text-white bg-gray-800 font-semibold cursor-pointer h-max w-full border-t border-t-white text-center"
+                            to="/tasks"
+                            className="group p-1 text-white bg-gray-800 font-semibold cursor-pointer h-max w-full border-t border-t-white flex items-center justify-center gap-2"
                         >
-                            Manage your tasks
+                            <span>Manage your tasks</span>
+                            <i className="ri-arrow-right-line transition-transform duration-150 group-hover:translate-x-1"></i>
                         </Link>
                     </div>
                 </div>
@@ -146,7 +150,7 @@ const Dashboard = () => {
                 <div className=" w-full h-full p-3">
                     <div className="border border-r-6 border-b-7 rounded-md w-full h-full flex flex-col items-center justify-between overflow-hidden">
                         <h1 className="text-[1.6rem] p-2.5 h-max border-b-3 border-b-black w-full bg-gray-500 text-white font-semibold text-center text-shadow-[2.5px_2.5px_3px_black]">
-                            Recent transactions
+                            Your Latest Transactions
                         </h1>
                         {transactions.length === 0 ? (
                             <div className="text-center">
