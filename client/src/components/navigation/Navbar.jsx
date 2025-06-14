@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Modal from "../misc/Modal";
 import useNavStore from "../../store/navStore";
 
-const Navbar = ({ menuOpen, setMenuOpen }) => {
+const Navbar = () => {
     const { activeLink, setActiveLink } = useNavStore();
 
     // const [activeLink, setActiveLink] = useState(2);
@@ -51,7 +50,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
                 >
                     <Link
                         id="transactions"
-                        to={"/expenses"}
+                        to={"/transactions"}
                         onClick={() => handleNavLinkClick(1)}
                         className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2 size-10 flex items-center justify-center rounded-full text-xl flex-col"
                     >

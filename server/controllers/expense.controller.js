@@ -3,11 +3,20 @@ import User from "../models/User.js";
 
 export const createNewExpense = async (req, res) => {
     try {
-        const { amount, category, isExpense, paidTo, receivedFrom, notes } =
-            req.body;
+        const {
+            amount,
+            category,
+            isExpense,
+            paidTo,
+            receivedFrom,
+            notes,
+            date,
+        } = req.body;
 
-        if (!amount || !category) {
-            return res.status(400).json({ message: "Fill all fields" });
+        if (!amount || !category || !date) {
+            return res
+                .status(400)
+                .json({ message: "Fill all fields (controller)" });
         }
 
         if (
@@ -32,6 +41,7 @@ export const createNewExpense = async (req, res) => {
             paidTo,
             receivedFrom,
             notes,
+            date,
         });
 
         const user = await User.findById(req.user._id);
@@ -50,9 +60,7 @@ export const createNewExpense = async (req, res) => {
                 { new: true },
             );
 
-            return res
-                .status(201)
-                .json({ message: "Expense created", createdExpense });
+            return res.status(201).json({ createdExpense });
         }
     } catch (error) {
         console.log(`error in createNewExpense controller ${error.message}`);
@@ -138,7 +146,9 @@ export const deleteExpense = async (req, res) => {
 
 export const getAllExpenses = async (req, res) => {
     try {
-        const allExpenses = await Expense.find({ user: req.user._id });
+        const allExpenses = await Expense.find({ user: req.user._id }).sort({
+            createdAt: -1,
+        });
         return res.status(200).json(allExpenses);
     } catch (error) {
         console.log(`error in getAllTasks controller ${error.message}`);

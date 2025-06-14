@@ -35,6 +35,11 @@ const ExpenseSchema = new mongoose.Schema(
             default: null,
         },
 
+        date: {
+            type: Date,
+            required: true,
+        },
+
         notes: {
             type: String,
         },

@@ -8,8 +8,11 @@ const Dashboard = () => {
     const { user, logout, deleteAccount, isDeletingProfile } = useAuthStore();
     const { dashboardTasks, isFetchingTasks, getDashboardTasks } =
         useTaskStore();
-    const { transactions, isFetchingTransactions, getDashboardTransactions } =
-        useTransactionStore();
+    const {
+        dashboardTransactions,
+        isFetchingTransactions,
+        getDashboardTransactions,
+    } = useTransactionStore();
 
     const formatDate = (date) => {
         let finalDate = "";
@@ -78,7 +81,7 @@ const Dashboard = () => {
 
                 <div className=" w-full h-full p-3">
                     <div className="border border-r-6 border-b-7 rounded-md w-full h-full flex flex-col items-center justify-between overflow-hidden">
-                        <h1 className="text-[1.6rem] p-2.5 h-max border-b-3 border-b-black w-full px-5 bg-gray-500 text-white font-semibold text-center text-shadow-[2.5px_2.5px_3px_black]">
+                        <h1 className="text-[1.55rem] p-2.5 h-max border-b-3 border-b-black w-full px-5 bg-gray-500 text-white font-semibold text-center text-shadow-[2.5px_2.5px_3px_black]">
                             Your Latest Tasks
                         </h1>
 
@@ -149,10 +152,10 @@ const Dashboard = () => {
 
                 <div className=" w-full h-full p-3">
                     <div className="border border-r-6 border-b-7 rounded-md w-full h-full flex flex-col items-center justify-between overflow-hidden">
-                        <h1 className="text-[1.6rem] p-2.5 h-max border-b-3 border-b-black w-full bg-gray-500 text-white font-semibold text-center text-shadow-[2.5px_2.5px_3px_black]">
+                        <h1 className="text-[1.55rem] p-2.5 h-max border-b-3 border-b-black w-full bg-gray-500 text-white font-semibold text-center text-shadow-[2.5px_2.5px_3px_black]">
                             Your Latest Transactions
                         </h1>
-                        {transactions.length === 0 ? (
+                        {dashboardTransactions.length === 0 ? (
                             <div className="text-center">
                                 <p className="text-xl font-semibold text-black">
                                     Your most recent transactions appear here.
@@ -164,51 +167,53 @@ const Dashboard = () => {
                         ) : (
                             <div className=" w-full h-full text-center flex flex-col items-center justify-between bg-gray-300">
                                 <div className="h-full w-full flex flex-col items-start justify-begin">
-                                    {transactions.map((transaction, index) => {
-                                        return (
-                                            <div
-                                                key={index}
-                                                className={`h-1/3 w-full border-b flex items-center justify-around ${
-                                                    transaction.isExpense
-                                                        ? "bg-red-400/20"
-                                                        : "bg-green-300/20"
-                                                }`}
-                                            >
-                                                <div className="flex flex-col justify-start">
-                                                    <h2 className="text-xl text-start font-semibold ">
-                                                        {transaction.paidTo !=
-                                                        null
-                                                            ? transaction.paidTo
-                                                            : transaction.receivedFrom}
-                                                    </h2>
-                                                    <p className="text-sm text-start">
-                                                        {formatDate(
-                                                            transaction.createdAt,
-                                                        )}
-                                                    </p>
-                                                </div>
-
-                                                <h4
-                                                    className={`font-semibold ${
-                                                        transaction.isExpense ===
-                                                        true
-                                                            ? "text-red-500"
-                                                            : "text-green-700"
-                                                    } px-4 rounded-full text-lg`}
+                                    {dashboardTransactions.map(
+                                        (transaction, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className={`h-1/3 w-full border-b flex items-center justify-around ${
+                                                        transaction.isExpense
+                                                            ? "bg-red-400/20"
+                                                            : "bg-green-300/20"
+                                                    }`}
                                                 >
-                                                    {transaction.isExpense
-                                                        ? `- ${transaction.amount}`
-                                                        : `+ ${transaction.amount}`}
-                                                </h4>
-                                            </div>
-                                        );
-                                    })}
+                                                    <div className="flex flex-col justify-start">
+                                                        <h2 className="text-xl text-start font-semibold ">
+                                                            {transaction.paidTo !=
+                                                            null
+                                                                ? transaction.paidTo
+                                                                : transaction.receivedFrom}
+                                                        </h2>
+                                                        <p className="text-sm text-start">
+                                                            {formatDate(
+                                                                transaction.createdAt,
+                                                            )}
+                                                        </p>
+                                                    </div>
+
+                                                    <h4
+                                                        className={`font-semibold ${
+                                                            transaction.isExpense ===
+                                                            true
+                                                                ? "text-red-500"
+                                                                : "text-green-700"
+                                                        } px-4 rounded-full text-lg`}
+                                                    >
+                                                        {transaction.isExpense
+                                                            ? `- ${transaction.amount}`
+                                                            : `+ ${transaction.amount}`}
+                                                    </h4>
+                                                </div>
+                                            );
+                                        },
+                                    )}
                                 </div>
                             </div>
                         )}
                         <div className="h-max w-full border-t bg-gray-400 text-center">
                             <Link
-                                to={"/expenses"}
+                                to={"/transactions"}
                                 className="p-1 text-black font-semibold cursor-pointer"
                             >
                                 Manage your transactions

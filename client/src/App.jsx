@@ -8,6 +8,7 @@ import RegisterPage from "./components/auth-components/RegisterPage";
 import Navbar from "./components/navigation/Navbar";
 import Tasks from "./components/task-components/Tasks";
 import Header from "./components/Header/Header";
+import Transactions from "./components/transaction-components/Transactions";
 
 const App = () => {
     const { user, checkAuth, isCheckingAuth } = useAuthStore();
@@ -29,10 +30,9 @@ const App = () => {
     return (
         <div className="w-full min-h-screen flex justify-center">
             <div className="w-full max-w-[768px] min-h-screen relative border-r-2 border-l-2">
-                {user && (
-                    <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                )}
+                {user && <Navbar />}
                 {user && <Header />}
+
                 <Routes>
                     <Route
                         path="/"
@@ -62,7 +62,13 @@ const App = () => {
                         path="/tasks"
                         element={user ? <Tasks /> : <Navigate to={"/"} />}
                     />
-                    <Route path="/expenses" />
+                    <Route
+                        path="/transactions"
+                        element={
+                            user ? <Transactions /> : <Navigate to={"/"} />
+                        }
+                    />
+
                     <Route
                         path="*"
                         element={<Navigate to={user ? "/dashboard" : "/"} />}

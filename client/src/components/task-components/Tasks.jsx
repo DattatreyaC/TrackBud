@@ -67,7 +67,7 @@ const Tasks = () => {
                 )}
 
                 <div className=" w-full h-full">
-                    <TaskSummary tasks={tasks} />
+                    <TaskSummary />
                     {tasks.length === 0 ? (
                         <div className=" h-full w-full text-center flex flex-col items-center justify-center">
                             <h1 className="text-3xl font-semibold">
@@ -124,7 +124,7 @@ const Tasks = () => {
 
                                         {/* delete button */}
                                         <button
-                                            className="border border-red-500 p-1 text-red-500 bg-red-300/30 cursor-pointer size-9
+                                            className="border border-red-500 p-1 text-red-500 bg-red-300/30 hover:bg-red-200 transition cursor-pointer size-9
                                             sm:size-10 rounded-full flex items-center justify-center"
                                             onClick={() =>
                                                 handleDelete(task._id)
