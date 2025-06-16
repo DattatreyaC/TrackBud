@@ -213,14 +213,14 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         )}
-                        <div className="h-max w-full border-t bg-gray-400 text-center">
-                            <Link
-                                to={"/transactions"}
-                                className="p-1 text-black font-semibold cursor-pointer"
-                            >
-                                Manage your transactions
-                            </Link>
-                        </div>
+
+                        <Link
+                            to="/tasks"
+                            className="group p-1 text-white bg-gray-800 font-semibold cursor-pointer h-max w-full border-t border-t-white flex items-center justify-center gap-2"
+                        >
+                            <i className="ri-arrow-left-line transition-transform duration-150 group-hover:translate-x-[-4px]"></i>
+                            <span>Manage your transactions</span>
+                        </Link>
                     </div>
                 </div>
             </div>

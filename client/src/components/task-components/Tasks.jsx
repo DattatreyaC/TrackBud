@@ -55,7 +55,7 @@ const Tasks = () => {
         <>
             <div
                 id="tasks-container"
-                className=" w-full my-17 overflow-y-scroll "
+                className=" w-full my-17 overflow-y-auto "
             >
                 {createOpen && (
                     <CreateTask

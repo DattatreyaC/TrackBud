@@ -6,6 +6,7 @@ const useTransactionStore = create((set) => ({
     balance: 0,
     transactions: [],
     dashboardTransactions: [],
+    transactionToBeUpdated: null,
 
     isGettingBalance: false,
     isFetchingTransactions: false,
@@ -112,6 +113,14 @@ const useTransactionStore = create((set) => ({
             console.log(`error in getDashboardTransactions ${error.message}`);
         } finally {
             set({ isFetchingTransactions: false });
+        }
+    },
+
+    setTransactionToBeUpdated: (transaction) => {
+        try {
+            set({ transactionToBeUpdated: transaction });
+        } catch (error) {
+            console.log(`error in transactionToBeUpdated ${error.message}`);
         }
     },
 }));

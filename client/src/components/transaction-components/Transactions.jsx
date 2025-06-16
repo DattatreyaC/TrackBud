@@ -3,6 +3,7 @@ import Balance from "./Balance";
 import useTransactionStore from "../../store/transactionStore";
 import CreateTransaction from "./CreateTransaction";
 import TransactionCard from "./TransactionCard";
+import UpdateTransaction from "./UpdateTransaction";
 
 const Transactions = () => {
     const {
@@ -10,6 +11,7 @@ const Transactions = () => {
         deleteTransaction,
         isCreatingTransaction,
         isFetchingTransactions,
+        setTransactionToBeUpdated,
         isUpdatingTransaction,
         isDeletingTransaction,
         getAllTransactions,
@@ -46,7 +48,7 @@ const Transactions = () => {
         <>
             <div
                 id="transaction-container"
-                className=" w-full my-17 overflow-y-scroll "
+                className=" w-full my-17 overflow-y-auto "
             >
                 {createOpen && (
                     <CreateTransaction
@@ -95,7 +97,9 @@ const Transactions = () => {
                                             className="border border-blue-500 text-blue-500 bg-blue-100 hover:bg-blue-200 p-2 rounded-full transition size-9 sm:size-10 flex items-center justify-center"
                                             onClick={() => {
                                                 setUpdateOpen(true);
-                                                setTaskToBeUpdated(task);
+                                                setTransactionToBeUpdated(
+                                                    transaction,
+                                                );
                                             }}
                                         >
                                             <i className="ri-edit-line text-lg"></i>
