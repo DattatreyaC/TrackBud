@@ -39,12 +39,13 @@ const Tasks = () => {
             if (!hasLoadedOnce) setHasLoadedOnce(true);
         };
 
+        document.title = "Tasks | TrackBud";
         fetchTasks();
     }, [isCreatingTask, isDeletingTask, isUpdatingTask]);
 
     if (isFetchingTasks && !hasLoadedOnce) {
         return (
-            <div className="min-h-screen w-full flex place-content-center">
+            <div className="h-screen w-full flex place-content-center">
                 LOADING...
             </div>
         );
@@ -52,7 +53,10 @@ const Tasks = () => {
 
     return (
         <>
-            <div className="min-h-screen h-screen w-full pb-15 pt-18 overflow-y-auto">
+            <div
+                id="tasks-container"
+                className=" w-full my-17 overflow-y-scroll "
+            >
                 {createOpen && (
                     <CreateTask
                         createOpen={createOpen}
@@ -66,7 +70,7 @@ const Tasks = () => {
                     />
                 )}
 
-                <div className=" w-full h-full">
+                <div className=" w-full h-full ">
                     <TaskSummary />
                     {tasks.length === 0 ? (
                         <div className=" h-full w-full text-center flex flex-col items-center justify-center">
@@ -139,14 +143,14 @@ const Tasks = () => {
                         })
                     )}
 
-                    <div className="w-full flex items-center justify-center absolute bottom-0 mb-20">
+                    <span className="w-max flex items-center justify-center absolute bottom-0 left-42 mb-20">
                         <button
                             className="p-3  bg-green-900 hover:bg-green-800 transition-colors duration-100 text-white rounded-full text-center cursor-pointer size-15 flex items-center justify-center shadow-[2px_2px_3px_black]"
                             onClick={() => setCreateOpen(true)}
                         >
                             <i className="ri-add-line text-xl"></i>
                         </button>
-                    </div>
+                    </span>
                 </div>
             </div>
         </>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import useAuthStore from "../../store/authStore";
@@ -27,6 +27,10 @@ const LoginPage = () => {
             // setPassword("");
         }
     };
+
+    useEffect(() => {
+        document.title = "Login | TrackBud";
+    }, []);
 
     return (
         <>

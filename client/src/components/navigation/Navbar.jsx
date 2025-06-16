@@ -12,7 +12,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="absolute bottom-0 left-0 w-full z-40 bg-black py-3 shadow-[0_-3px_10px_black] ">
+        <nav className="absolute bottom-0 left-0 w-full z-40 bg-black py-4 shadow-[0_-3px_10px_black] ">
             {/* h-max px-6 sm:px-10 md:px-15 lg:px-40 xl:px-60 2xl:px-80 flex items-center justify-betwee */}
             <div className="w-full ">
                 {/* <a

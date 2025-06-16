@@ -29,6 +29,8 @@ const Transactions = () => {
             if (!hasLoadedOnce) setHasLoadedOnce(true);
         };
 
+        document.title = "Transactions | TrackBud";
+
         fetchTransactions();
     }, [isCreatingTransaction, isDeletingTransaction, isUpdatingTransaction]);
 
@@ -42,7 +44,10 @@ const Transactions = () => {
 
     return (
         <>
-            <div className=" h-screen w-full overflow-y-auto border-2 border-red-600">
+            <div
+                id="transaction-container"
+                className=" w-full my-17 overflow-y-scroll "
+            >
                 {createOpen && (
                     <CreateTransaction
                         createOpen={createOpen}

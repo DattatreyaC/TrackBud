@@ -63,6 +63,8 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
+        document.title = "Home | TrackBud";
+
         getDashboardTasks();
         getDashboardTransactions();
     }, []);
