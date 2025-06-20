@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useTaskStore from "../../store/TaskStore";
+import useTaskStore from "../../store/taskStore";
 
 const UpdateTask = ({ updateOpen, setUpdateOpen }) => {
     const { updateTask, isUpdatingTask, taskToBeUpdated } = useTaskStore();

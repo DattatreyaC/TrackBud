@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import useTaskStore from "../../store/TaskStore";
+import useTaskStore from "../../store/taskStore";
 
 const CreateTask = ({ createOpen, setCreateOpen }) => {
     const [title, setTitle] = useState("");

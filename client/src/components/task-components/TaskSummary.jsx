@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useTaskStore from "../../store/TaskStore";
+import useTaskStore from "../../store/taskStore";
 
 const TaskSummary = () => {
     const { tasks } = useTaskStore();
