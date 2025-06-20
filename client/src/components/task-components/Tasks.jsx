@@ -143,7 +143,7 @@ const Tasks = () => {
                         })
                     )}
 
-                    <span className="w-max flex items-center justify-center absolute bottom-0 left-42 mb-20">
+                    <span className="w-max flex items-center justify-center absolute bottom-0 mb-20">
                         <button
                             className="p-3  bg-green-900 hover:bg-green-800 transition-colors duration-100 text-white rounded-full text-center cursor-pointer size-15 flex items-center justify-center shadow-[2px_2px_3px_black]"
                             onClick={() => setCreateOpen(true)}

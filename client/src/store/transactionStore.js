@@ -6,12 +6,9 @@ const useTransactionStore = create((set) => ({
     balance: 0,
     transactions: [],
     dashboardTransactions: [],
-    transactionToBeUpdated: null,
-
     isGettingBalance: false,
     isFetchingTransactions: false,
     isCreatingTransaction: false,
-    isUpdatingTransaction: false,
     isDeletingTransaction: false,
 
     getBalance: async () => {
@@ -48,25 +45,6 @@ const useTransactionStore = create((set) => ({
             );
         } finally {
             set({ isCreatingTransaction: false });
-        }
-    },
-
-    updateTransaction: async (id, payload) => {
-        try {
-            set({ isUpdatingTransaction: true });
-            const response = await axiosInstance.put(
-                `/expenses/update/${id}`,
-                payload,
-            );
-            if (response.data === 200) {
-                toast.success("Transaction updated");
-            }
-        } catch (error) {
-            toast.error(
-                error.response?.data?.message || "Cannot update transaction",
-            );
-        } finally {
-            set({ isUpdatingTransaction: false });
         }
     },
 
@@ -113,14 +91,6 @@ const useTransactionStore = create((set) => ({
             console.log(`error in getDashboardTransactions ${error.message}`);
         } finally {
             set({ isFetchingTransactions: false });
-        }
-    },
-
-    setTransactionToBeUpdated: (transaction) => {
-        try {
-            set({ transactionToBeUpdated: transaction });
-        } catch (error) {
-            console.log(`error in transactionToBeUpdated ${error.message}`);
         }
     },
 }));

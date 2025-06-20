@@ -51,7 +51,7 @@ const TransactionCard = ({ transaction }) => {
 
     return (
         <>
-            <div className="flex flex-col items-start w-full">
+            <div className="flex flex-col items-start w-full border-r border-black/20">
                 <h2 className="text-xl text-start font-semibold">
                     {(() => {
                         const name =
@@ -59,25 +59,26 @@ const TransactionCard = ({ transaction }) => {
                         return name.charAt(0).toUpperCase() + name.slice(1);
                     })()}
                 </h2>
-                <p className="text-md text-gray-500 whitespace-nowrap">
+
+                <p className="text-md text-gray-500 whitespace-nowrap ">
                     {formatDate(transaction.date)}
                 </p>
 
                 <div className="flex gap-2 items-center justify-start">
                     {transaction.category && (
-                        <p className="text-sm border border-black rounded-xl  px-2 bg-yellow-100 text-black">
+                        <p className="text-sm border border-black/50 rounded-xl  px-2 bg-violet-200 text-black font-light">
                             {transaction.category}
                         </p>
                     )}
 
                     {transaction.notes && (
-                        <p className="text-sm border border-black rounded-xl px-2 bg-sky-100 text-black ">
+                        <p className="text-sm border border-black/50 rounded-xl px-2 bg-yellow-100 text-black font-light text-center">
                             {transaction.notes}
                         </p>
                     )}
                 </div>
             </div>
-            <div className="w-full  text-center">
+            <div className="w-full  text-center ">
                 <h4
                     className={`font-semibold text-lg whitespace-nowrap ${
                         transaction.isExpense

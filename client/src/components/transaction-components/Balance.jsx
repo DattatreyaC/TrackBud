@@ -20,8 +20,10 @@ const Balance = () => {
     }, [isCreatingTransaction, isUpdatingTransaction, isDeletingTransaction]);
 
     return (
-        <div className="w-full text-3xl border p-5">
-            <h1 className="w-full text-center">Current balance : {balance}</h1>
+        <div className="w-full text-3xl border-b-5 border-b-green-900 p-5 bg-green-800">
+            <h1 className="w-full text-center text-white font-black">
+                Balance : ₹{balance}
+            </h1>
         </div>
     );
 };

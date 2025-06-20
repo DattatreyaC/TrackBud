@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "../misc/Modal";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const [open, setOpen] = useState(false);
@@ -9,7 +10,12 @@ const Header = () => {
     return (
         <header className="w-full absolute top-0 left-0 z-50 shadow-[0_3px_10px_black]">
             <div className="flex items-center justify-between px-5 py-4 bg-black">
-                <h1 className="text-white text-3xl">TrackBud</h1>
+                <Link
+                    to={"/dashboard"}
+                    className="text-white text-3xl font-vibur rotate-355 underline"
+                >
+                    TrackBud
+                </Link>
 
                 <div className="w-full flex items-center justify-end">
                     <button

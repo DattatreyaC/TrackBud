@@ -161,6 +161,7 @@ const CreateTransaction = ({ createOpen, setCreateOpen }) => {
                             <option value="" disabled>
                                 Choose Category
                             </option>
+                            <option value="Salary">Salary</option>
                             <option value="Travel">Travel</option>
                             <option value="Food">Food</option>
                             <option value="Shopping">Shopping</option>
@@ -189,7 +190,7 @@ const CreateTransaction = ({ createOpen, setCreateOpen }) => {
                         disabled={isCreatingTransaction}
                         className="p-2 w-full bg-green-800 mt-3 rounded-sm cursor-pointer text-white hover:bg-green-900 transition-colors duration-100"
                     >
-                        Add Task
+                        Add Transaction
                     </button>
 
                     <button
