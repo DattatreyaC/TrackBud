@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "https://trackbud-backend.vercel.app",
+    baseURL: "https://trackbud-backend.vercel.app/api",
     headers: {
         "Content-Type": "application/json",
     },
