@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useTaskStore from "../../store/TaskStore";
+import useTaskStore from "../../store/taskStore";
 import { useEffect } from "react";
 import TaskCard from "./TaskCard";
 import CreateTask from "./CreateTask";
