@@ -16,6 +16,7 @@ const port = process.env.PORT || 5000;
 const allowedOrigins = [
     "http://localhost:5173",
     "https://trackbud.vercel.app/",
+    "https://trackbud-dattatreyac.vercel.app",
 ];
 
 app.use((req, res, next) => {
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use(
     cors({
         origin: function (origin, callback) {
+            console.log(origin);
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);
             } else {
