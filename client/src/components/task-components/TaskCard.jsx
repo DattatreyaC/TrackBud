@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useTaskStore from "../../store/taskStore";
 
 const TaskCard = ({
     id,
