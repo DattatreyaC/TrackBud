@@ -37,6 +37,8 @@ export const register = async (req, res) => {
 
                 res.cookie("token", token, {
                     httpOnly: true,
+                    secure: true,
+                    sameSite: none,
                 });
 
                 return res.status(201).json(createdUser);
@@ -68,6 +70,8 @@ export const login = async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
         res.cookie("token", token, {
             httpOnly: true,
+            secure: true,
+            sameSite: none,
         });
 
         return res.status(200).json(user);
