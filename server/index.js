@@ -1,4 +1,3 @@
-// index.js
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -12,9 +11,7 @@ import userRouter from "./routes/user.routes.js";
 dotenv.config();
 
 const app = express();
-
-// ⚠️ DON'T call app.listen on Vercel
-connectToDb();
+const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
     "http://localhost:5173",
@@ -44,5 +41,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/tasks", taskRouter);
 app.use("/api/expenses", expenseRouter);
 
-// ✅ Export app so Vercel can use it as a handler
-export default app;
+app.listen(port, () => {
+    connectToDb();
+    console.log(`Server started on port ${port}`);
+});
