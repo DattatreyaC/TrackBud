@@ -14,7 +14,9 @@ const useTransactionStore = create((set) => ({
     getBalance: async () => {
         try {
             set({ isGettingBalance: true });
-            const response = await axiosInstance.get("/user");
+            const response = await axiosInstance.get("/user", {
+                withCredentials: true,
+            });
 
             if (response.status === 200) {
                 set({ balance: response.data.balance });
@@ -39,7 +41,9 @@ const useTransactionStore = create((set) => ({
                 toast.success("Transaction added");
             }
         } catch (error) {
-            console.log(`error in createTransaction ${error.message}`);
+            console.log(`error in createTransaction ${error.message}`, {
+                withCredentials: true,
+            });
             toast.error(
                 error.response?.data?.message || "Cannot craete transaction",
             );
@@ -53,6 +57,7 @@ const useTransactionStore = create((set) => ({
             set({ isDeletingTransaction: true });
             const response = await axiosInstance.delete(
                 `/expenses/delete/${id}`,
+                { withCredentials: true },
             );
         } catch (error) {
             toast.error(
@@ -66,7 +71,9 @@ const useTransactionStore = create((set) => ({
     getAllTransactions: async () => {
         try {
             set({ isFetchingTransactions: true });
-            const response = await axiosInstance.get("/expenses/");
+            const response = await axiosInstance.get("/expenses/", {
+                withCredentials: true,
+            });
             if (response.status === 200) {
                 set({ transactions: response.data });
             }
@@ -82,6 +89,7 @@ const useTransactionStore = create((set) => ({
             set({ isFetchingTransactions: true });
             const response = await axiosInstance.get(
                 "/expenses/dashboard-expenses",
+                { withCredentials: true },
             );
             if (response.status === 200) {
                 set({ dashboardTransactions: response.data });

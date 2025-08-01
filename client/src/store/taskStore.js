@@ -29,7 +29,11 @@ const useTaskStore = create((set, get) => ({
                 dueDate,
             };
 
-            const response = await axiosInstance.post("/tasks/create", payload);
+            const response = await axiosInstance.post(
+                "/tasks/create",
+                payload,
+                { withCredentials: true },
+            );
 
             if (response.status === 201) {
                 toast.success("Task Created");
@@ -48,6 +52,7 @@ const useTaskStore = create((set, get) => ({
             const response = await axiosInstance.put(
                 `/tasks/update/${id}`,
                 payload,
+                { withCredentials: true },
             );
             if (response.status === 200) {
                 toast.success("Task Updated");
@@ -63,7 +68,9 @@ const useTaskStore = create((set, get) => ({
     deleteTask: async (id) => {
         try {
             set({ isDeletingTask: true });
-            const response = await axiosInstance.delete(`/tasks/delete/${id}`);
+            const response = await axiosInstance.delete(`/tasks/delete/${id}`, {
+                withCredentials: true,
+            });
             if (response.status === 200) {
                 toast.success("Task Deleted");
             }
@@ -80,7 +87,9 @@ const useTaskStore = create((set, get) => ({
         // }
         try {
             set({ isFetchingTasks: true });
-            const response = await axiosInstance.get("/user/tasks");
+            const response = await axiosInstance.get("/user/tasks", {
+                withCredentials: true,
+            });
             if (response.status === 200) {
                 set({ tasks: response.data });
             }
@@ -100,7 +109,9 @@ const useTaskStore = create((set, get) => ({
         // }
         try {
             set({ isFetchingTasks: true });
-            const response = await axiosInstance.get("/tasks/dashboard-tasks");
+            const response = await axiosInstance.get("/tasks/dashboard-tasks", {
+                withCredentials: true,
+            });
             if (response.status === 200) {
                 set({ dashboardTasks: response.data });
             }
@@ -118,7 +129,9 @@ const useTaskStore = create((set, get) => ({
         try {
             set({ taskToBeUpdated: task });
         } catch (error) {
-            console.log(`error in setTaskToBeUpdated ${error.message}`);
+            console.log(`error in setTaskToBeUpdated ${error.message}`, {
+                withCredentials: true,
+            });
         }
     },
 }));

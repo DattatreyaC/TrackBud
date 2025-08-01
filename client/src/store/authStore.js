@@ -15,7 +15,9 @@ const useAuthStore = create((set) => ({
     checkAuth: async () => {
         try {
             // set({ isCheckingAuth: true });
-            const response = await axiosInstance.get("/auth/checkAuth");
+            const response = await axiosInstance.get("/auth/checkAuth", {
+                withCredentials: true,
+            });
             if (response) {
                 set({ user: response.data });
             }
@@ -29,12 +31,16 @@ const useAuthStore = create((set) => ({
     register: async (firstname, lastname, email, password) => {
         try {
             set({ isRegistering: true });
-            const response = await axiosInstance.post("/auth/register", {
-                firstname,
-                lastname,
-                email,
-                password,
-            });
+            const response = await axiosInstance.post(
+                "/auth/register",
+                {
+                    firstname,
+                    lastname,
+                    email,
+                    password,
+                },
+                { withCredentials: true },
+            );
             console.log(response);
             if (response.status === 201) {
                 set({ user: response.data });
@@ -50,10 +56,14 @@ const useAuthStore = create((set) => ({
     login: async (email, password) => {
         try {
             set({ isLoggingIn: true });
-            const response = await axiosInstance.post("/auth/login", {
-                email,
-                password,
-            });
+            const response = await axiosInstance.post(
+                "/auth/login",
+                {
+                    email,
+                    password,
+                },
+                { withCredentials: true },
+            );
             if (response.status === 200) {
                 set({ user: response.data });
             }
@@ -68,7 +78,9 @@ const useAuthStore = create((set) => ({
     logout: async () => {
         try {
             set({ isLoggingOut: true });
-            const response = await axiosInstance.post("/auth/logout");
+            const response = await axiosInstance.post("/auth/logout", {
+                withCredentials: true,
+            });
             if (response.status === 200) {
                 toast.success("Logged Out");
             }
@@ -82,7 +94,9 @@ const useAuthStore = create((set) => ({
     deleteAccount: async () => {
         try {
             set({ isDeletingProfile: true });
-            const response = await axiosInstance.delete("/auth/delete");
+            const response = await axiosInstance.delete("/auth/delete", {
+                withCredentials: true,
+            });
             if (response.status === 200) {
                 set({ user: null });
                 toast.success("Account deleted");
