@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: "https://trackbud-production.up.railway.app/",
     headers: {
         "Content-Type": "application/json",
     },
