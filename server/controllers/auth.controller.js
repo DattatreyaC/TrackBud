@@ -38,16 +38,16 @@ export const register = async (req, res) => {
                 res.cookie("token", token, {
                     httpOnly: true,
                     secure: true,
-                    sameSite: none,
+                    sameSite: true,
                 });
 
                 return res.status(201).json(createdUser);
             }
         } else {
-            return res.status(500).json({ message: "Something went wrong" });
+            return res.status(400).json({ message: "Something went wrong" });
         }
     } catch (error) {
-        console.log("error in register controller" + error.message);
+        console.log("error in register controller " + error.message);
         return res.status(500).json({ message: "Something went wrong" });
     }
 };
@@ -71,7 +71,7 @@ export const login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: none,
+            sameSite: true,
         });
 
         return res.status(200).json(user);
