@@ -35,6 +35,7 @@ const useAuthStore = create((set) => ({
                 email,
                 password,
             });
+            console.log(response);
             if (response.status === 201) {
                 set({ user: response.data });
                 toast.success("Account Created");

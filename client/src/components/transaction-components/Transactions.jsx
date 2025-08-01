@@ -108,8 +108,6 @@ const Transactions = () => {
                         </button>
                     </div>
                 </div>
-
-                <TransactionRadar />
             </div>
         </>
     );
