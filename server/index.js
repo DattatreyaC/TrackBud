@@ -29,7 +29,7 @@ const allowedOrigins = [
 
 app.use(
     cors({
-        origin: ["http://localhost:5173", "https://trackbud.vercel.app/"],
+        origin: ["http://localhost:5173", "https://trackbud.vercel.app"],
         credentials: true,
     }),
 );
