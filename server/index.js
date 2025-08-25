@@ -29,7 +29,14 @@ const allowedOrigins = [
 
 app.use(
     cors({
-        origin: ["http://localhost:5173", "https://trackbud.vercel.app"],
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true); // allow server-to-server or Postman requests
+            if (allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
         credentials: true,
     }),
 );
