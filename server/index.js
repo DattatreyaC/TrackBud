@@ -12,6 +12,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+export const env = process.env.ENVIRONMENT;
 
 const allowedOrigins = [
     "http://localhost:5173",
