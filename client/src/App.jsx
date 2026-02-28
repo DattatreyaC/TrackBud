@@ -29,7 +29,7 @@ const App = () => {
 
     return (
         <div className="w-full min-h-screen flex justify-center">
-            <div className="w-full max-w-[768px] h-screen relative border-r-2 border-l-2 bg-white">
+            <div className="w-full max-w-[1024px] h-screen relative border-r-2 border-l-2 bg-white">
                 {user && <Navbar />}
                 {user && <Header />}
 

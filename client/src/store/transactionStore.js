@@ -101,6 +101,23 @@ const useTransactionStore = create((set) => ({
             set({ isFetchingTransactions: false });
         }
     },
+
+    getTransactionsByCategory: async (category) => {
+        try {
+            set({ isFetchingTransactions: true });
+            const response = await axiosInstance.get(
+                `/expenses/category/${category}`,
+                { withCredentials: true },
+            );
+            if (response.status === 200) {
+                set({ transactions: response.data });
+            }
+        } catch (error) {
+            set({ transactions: [] });
+        } finally {
+            set({ isFetchingTransactions: false });
+        }
+    },
 }));
 
 export default useTransactionStore;

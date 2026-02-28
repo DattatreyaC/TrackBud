@@ -11,13 +11,15 @@ const Transactions = () => {
         deleteTransaction,
         isCreatingTransaction,
         isFetchingTransactions,
-
         isDeletingTransaction,
         getAllTransactions,
+        getTransactionByCategory,
     } = useTransactionStore();
 
     const [createOpen, setCreateOpen] = useState(false);
     const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
+    const [category, setCategory] = useState("All");
+    const [displayedTransactions, setDisplayedTransactions] = useState([]);
 
     const handleDelete = (id) => {
         deleteTransaction(id);
@@ -33,6 +35,22 @@ const Transactions = () => {
 
         fetchTransactions();
     }, [isCreatingTransaction, isDeletingTransaction]);
+
+    useEffect(() => {
+        setDisplayedTransactions(transactions);
+    }, [transactions]);
+
+    useEffect(() => {
+        if (category === "All") {
+            setDisplayedTransactions(transactions);
+            return;
+        }
+        setDisplayedTransactions(
+            transactions.filter((t) => {
+                return t.category === category;
+            }),
+        );
+    }, [category]);
 
     if (isFetchingTransactions && !hasLoadedOnce) {
         return (
@@ -56,9 +74,35 @@ const Transactions = () => {
                 )}
 
                 <div className=" w-full h-full">
-                    <Balance />
+                    <header className="sticky top-0.5 z-10 bg-black">
+                        <Balance
+                            filteredTransactions={displayedTransactions}
+                            filter={category}
+                        />
 
-                    {transactions.length === 0 ? (
+                        <form className="space-x-1 px-5 py-1 text-white">
+                            <label htmlFor="category" className="text-sm">
+                                Filter by category
+                            </label>
+                            <select
+                                name="category"
+                                id="category"
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                className="border p-1.5 bg-black rounded-lg"
+                            >
+                                <option value="All">All</option>
+                                <option value="Salary">Salary</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Food">Food</option>
+                                <option value="Rent">Rent</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Other">Others</option>
+                            </select>
+                        </form>
+                    </header>
+
+                    {displayedTransactions.length === 0 ? (
                         <div className=" w-full h-full text-center flex flex-col items-center justify-center ">
                             <h1 className="text-3xl font-semibold ">
                                 No transactions available
@@ -70,7 +114,7 @@ const Transactions = () => {
                         </div>
                     ) : (
                         <div className="flex flex-col gap-3 px-4 py-3">
-                            {transactions.map((transaction, index) => (
+                            {displayedTransactions.map((transaction, index) => (
                                 <div
                                     key={index}
                                     className={`w-full flex items-center justify-between relative gap-3 p-4 rounded-xl border shadow-sm ${

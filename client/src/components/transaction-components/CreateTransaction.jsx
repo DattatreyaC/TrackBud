@@ -164,6 +164,7 @@ const CreateTransaction = ({ createOpen, setCreateOpen }) => {
                             <option value="Salary">Salary</option>
                             <option value="Travel">Travel</option>
                             <option value="Food">Food</option>
+                            <option value="Rent">Rent</option>
                             <option value="Shopping">Shopping</option>
                             <option value="Other">Others</option>
                         </select>

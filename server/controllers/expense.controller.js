@@ -151,7 +151,7 @@ export const getAllExpenses = async (req, res) => {
         });
         return res.status(200).json(allExpenses);
     } catch (error) {
-        console.log(`error in getAllTasks controller ${error.message}`);
+        console.log(`error in getAllExpenses controller ${error.message}`);
         return res.status(500).json({ message: "Internal server error" });
     }
 };
@@ -165,6 +165,118 @@ export const getDashboardExpenses = async (req, res) => {
         return res.status(200).json(expenses);
     } catch (error) {
         console.log(`error in getDashboardExpenses ${error.message}`);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const getExpensesOfCategory = async (req, res) => {
+    try {
+        const { category } = req.params;
+
+        const expenses = await Expense.find({
+            user: req.user._id,
+            category: category,
+        }).sort({
+            createdAt: -1,
+        });
+
+        return res.status(200).json(expenses);
+    } catch (error) {
+        console.log(
+            `error in getTExpensesByCategory controller ${error.message}`,
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const getExpensesOfMonth = async (req, res) => {
+    try {
+        const { month } = req.params;
+
+        const monthNumber = {
+            January: 0,
+            February: 1,
+            March: 2,
+            April: 3,
+            May: 4,
+            June: 5,
+            July: 6,
+            August: 7,
+            September: 8,
+            October: 9,
+            November: 10,
+            December: 11,
+        };
+
+        const searchedMonthIndex = monthNumber[month];
+
+        if (searchedMonthIndex === undefined) {
+            return res.status(400).json({ message: "Invalid month name" });
+        }
+
+        const year = new Date().getFullYear(); //TODO : GET BY YEAR as well
+
+        const startDate = new Date(year, searchedMonthIndex, 1);
+
+        const endDate = new Date(year, searchedMonthIndex + 1, 1);
+
+        const expenses = await Expense.find({
+            user: req.user._id,
+            date: {
+                $gte: startDate,
+                $lt: endDate,
+            },
+        }).sort({ date: 1 });
+
+        return res.status(200).json(expenses);
+    } catch (error) {
+        console.log(`error in getExpensesByMonth controller ${error.message}`);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const getExpensesofMonthInCategory = async (req, res) => {
+    try {
+        const { month, category } = req.params;
+        const monthNumber = {
+            January: 0,
+            February: 1,
+            March: 2,
+            April: 3,
+            May: 4,
+            June: 5,
+            July: 6,
+            August: 7,
+            September: 8,
+            October: 9,
+            November: 10,
+            December: 11,
+        };
+        const searchedMonthIndex = monthNumber[month];
+
+        if (searchedMonthIndex === undefined) {
+            return res.status(400).json({ message: "Invalid month name" });
+        }
+        const year = new Date().getFullYear(); //TODO : GET BY YEAR as well
+
+        const startDate = new Date(year, searchedMonthIndex, 1);
+
+        const endDate = new Date(year, searchedMonthIndex + 1, 1);
+
+        const expenses = await Expense.find({
+            user: req.user._id,
+            date: {
+                $gte: startDate,
+                $lt: endDate,
+            },
+            category: category,
+        }).sort({ date: 1 });
+
+        return res.status(200).json(expenses);
+    } catch (error) {
+        console.log(
+            `Error in getExpensesofMonthInCategory controller : ${error}`,
+        );
         return res.status(500).json({ message: "Internal server error" });
     }
 };
